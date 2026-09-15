@@ -1,0 +1,211 @@
+{
+  "info": {
+    "name": "Clientes API",
+    "description": "Pruebas para API REST de clientes con Spring Boot y MySQL.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://clientes-api-production-cfb4.up.railway.app"
+    },
+    {
+      "key": "cliente_id",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar clientes",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Respuesta es una lista', function () {",
+              "  pm.expect(pm.response.json()).to.be.an('array');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/clientes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "clientes"]
+        }
+      }
+    },
+    {
+      "name": "Crear cliente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 201', function () {",
+              "  pm.response.to.have.status(201);",
+              "});",
+              "const json = pm.response.json();",
+              "pm.collectionVariables.set('cliente_id', json.id);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Ana Perez\",\n  \"email\": \"ana.perez@example.com\",\n  \"telefono\": \"+57 300 123 4567\",\n  \"direccion\": \"Calle 123 #45-67\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/clientes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "clientes"]
+        }
+      }
+    },
+    {
+      "name": "Buscar cliente por ID",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Cliente encontrado', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json).to.have.property('id');",
+              "  pm.expect(json.id).to.eql(Number(pm.collectionVariables.get('cliente_id')));",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/clientes/{{cliente_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "clientes", "{{cliente_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Actualizar cliente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Cliente actualizado', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json.nombre).to.eql('Ana Perez Actualizada');",
+              "  pm.expect(json.telefono).to.eql('+57 301 987 6543');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Ana Perez Actualizada\",\n  \"email\": \"ana.perez@example.com\",\n  \"telefono\": \"+57 301 987 6543\",\n  \"direccion\": \"Carrera 10 #20-30\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/clientes/{{cliente_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "clientes", "{{cliente_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Eliminar cliente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 204', function () {",
+              "  pm.response.to.have.status(204);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/clientes/{{cliente_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "clientes", "{{cliente_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Validacion - crear cliente sin email",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 400', function () {",
+              "  pm.response.to.have.status(400);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Cliente sin email\",\n  \"telefono\": \"123456789\",\n  \"direccion\": \"Sin direccion\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/clientes",
+          "host": ["{{base_url}}"],
+          "path": ["api", "clientes"]
+        }
+      }
+    }
+  ]
+}
