@@ -3,28 +3,60 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Clientes API</title>
+    <title>Nexus Clientes</title>
     <link rel="stylesheet" href="/styles.css">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
     <script src="/app.js" defer></script>
   </head>
   <body>
+    <div class="shell-grid" aria-hidden="true"></div>
+
     <header class="topbar">
-      <div>
-        <p class="eyebrow">Railway + Spring Boot</p>
-        <h1>Clientes</h1>
-      </div>
-      <a class="api-link" href="/api/clientes" target="_blank" rel="noreferrer">
-        <i data-lucide="braces"></i>
-        API
+      <a class="brand" href="/" aria-label="Nexus Clientes">
+        <span class="brand-mark"><i data-lucide="scan-face"></i></span>
+        <span>
+          <strong>Nexus Clientes</strong>
+          <small>Spring Boot Control Hub</small>
+        </span>
       </a>
+
+      <nav class="top-actions" aria-label="Acciones principales">
+        <span class="sync-pill"><span></span> API Online</span>
+        <a class="api-link" href="/api/clientes" target="_blank" rel="noreferrer">
+          <i data-lucide="braces"></i>
+          API
+        </a>
+      </nav>
     </header>
 
     <main class="layout">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Customer Core</p>
+          <h1 id="hero-title">Panel de clientes con estilo futurista</h1>
+          <p class="hero-text">Gestiona registros, consulta contactos y sincroniza cambios con una interfaz oscura, precisa y lista para tu API REST.</p>
+        </div>
+
+        <div class="metrics">
+          <article>
+            <span id="metricTotal">0</span>
+            <p>Clientes</p>
+          </article>
+          <article>
+            <span id="metricEmails">0</span>
+            <p>Emails</p>
+          </article>
+          <article>
+            <span id="metricPhones">0</span>
+            <p>Telefonos</p>
+          </article>
+        </div>
+      </section>
+
       <section class="panel form-panel" aria-labelledby="form-title">
         <div class="panel-heading">
           <div>
-            <p class="eyebrow">Registro</p>
+            <p class="eyebrow">Registro neural</p>
             <h2 id="form-title">Nuevo cliente</h2>
           </div>
           <button class="icon-button ghost" id="resetButton" type="button" title="Limpiar formulario" aria-label="Limpiar formulario">
@@ -65,7 +97,7 @@
       <section class="panel table-panel" aria-labelledby="list-title">
         <div class="panel-heading list-heading">
           <div>
-            <p class="eyebrow">Base de datos</p>
+            <p class="eyebrow">Base de datos activa</p>
             <h2 id="list-title">Clientes guardados</h2>
           </div>
           <div class="toolbar">

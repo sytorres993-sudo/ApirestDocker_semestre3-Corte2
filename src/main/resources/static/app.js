@@ -22,6 +22,9 @@ const elements = {
   emptyState: document.querySelector("#emptyState"),
   statusText: document.querySelector("#statusText"),
   countBadge: document.querySelector("#countBadge"),
+  metricTotal: document.querySelector("#metricTotal"),
+  metricEmails: document.querySelector("#metricEmails"),
+  metricPhones: document.querySelector("#metricPhones"),
   toast: document.querySelector("#toast")
 };
 
@@ -153,6 +156,7 @@ function renderClientes() {
   });
 
   elements.countBadge.textContent = String(clientes.length);
+  renderMetrics(clientes);
   elements.emptyState.hidden = clientes.length > 0;
   elements.clientesBody.innerHTML = clientes.map(clienteRow).join("");
 
@@ -165,6 +169,12 @@ function renderClientes() {
   });
 
   window.lucide?.createIcons();
+}
+
+function renderMetrics(clientes) {
+  elements.metricTotal.textContent = String(clientes.length);
+  elements.metricEmails.textContent = String(clientes.filter((cliente) => cliente.email).length);
+  elements.metricPhones.textContent = String(clientes.filter((cliente) => cliente.telefono).length);
 }
 
 function clienteRow(cliente) {
